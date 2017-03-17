@@ -1,6 +1,6 @@
 <?php
 
-use yii\db\Migration;
+use grozzzny\events-manager\migrations\Migration;
 use yii\db\mysql\Schema;
 
 class m170317_154542_events_manager extends Migration
