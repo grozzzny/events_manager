@@ -1,5 +1,5 @@
 {
-    "name": "grozzzny/events_manager",
+    "name": "grozzzny/events-manager",
     "description": "Events manager for EasyiiCMS",
     "keywords": ["yii", "easyiiCMS", "CMS", "module"],
     "type": "yii2-extension",
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "grozzzny\\events_manager\\": ""
+            "grozzzny\\events-manager\\": ""
         }
     }
 }
