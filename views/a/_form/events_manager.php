@@ -50,6 +50,7 @@ $module = $this->context->module->id;
     ]
 ])?>
 
+<?= $form->field($current_model, 'sort') ?>
 
 <div class="row">
     <div class="col-md-6">

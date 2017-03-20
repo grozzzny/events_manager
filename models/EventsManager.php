@@ -38,6 +38,7 @@ class EventsManager extends Base
             ['home_page', 'default', 'value' => self::HOME_PAGE_ON],
             [['soc_vk', 'soc_fb', 'soc_inst'], 'url'],
             ['name', 'required'],
+            [['sort'], 'integer']
         ];
     }
 
@@ -56,6 +57,7 @@ class EventsManager extends Base
             'slider' => 'Слайдер на главной',
             'home_page' => 'Размещение на главной',
             'order_num' => 'Индекс сортировки',
+            'sort' => 'Индекс сортировки',
             'status' => 'Состояние'
         ];
     }
