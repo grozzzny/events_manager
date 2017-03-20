@@ -34,9 +34,11 @@ class AController extends Controller
     {
         $current_model = Base::getModel($alias);
 
-        $query = $current_model->find()->sort();
+        $query = $current_model->find();
 
         $data = new ActiveDataProvider(['query' => $query]);
+
+        $current_model::querySort($data);
 
         $current_model::queryFilter($query, Yii::$app->request->get());
 

@@ -6,7 +6,6 @@ BootstrapPluginAsset::register($this);
 ModuleAsset::register($this);
 
 $this->title = $current_model::TITLE;
-
 ?>
 
 <?= $this->render('_menu', ['current_model' => $current_model]) ?>
@@ -14,7 +13,8 @@ $this->title = $current_model::TITLE;
 <? if($data->count > 0) : ?>
 
     <?= $this->render('_list/'.$current_model::ALIAS, [
-        'data' => $data
+        'data' => $data,
+        'current_model' => $current_model
     ]) ?>
 
     <?= yii\widgets\LinkPager::widget([

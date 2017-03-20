@@ -41,9 +41,13 @@ foreach ($current_model->models as $model){
         </a>
     </li>
 
-    <?= $this->render('_filter/'.$current_model::ALIAS, [
-        'current_model' => $current_model
-    ]) ?>
+    <? if($action === 'index'):?>
+
+        <?= $this->render('_filter/'.$current_model::ALIAS, [
+            'current_model' => $current_model
+        ]) ?>
+
+    <? endif;?>
 
 </ul>
 <br/>
