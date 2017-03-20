@@ -68,7 +68,7 @@ class EventsManager extends Base
             $query->andFilterWhere(['LIKE', 'name', $get['name']]);
         }
 
-        if($get['month'] != ''){
+        if(isset($get['month'])){
             $query->andFilterWhere(["FROM_UNIXTIME(datetime, '%c')" => $get['month']+1]);
         }
 
