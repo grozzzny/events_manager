@@ -19,6 +19,7 @@ class EventsManager extends Base
     const SHOW_ORDER_NUM = false;
 
     public $months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    public $months_d = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
 
     public static function tableName()
     {
@@ -68,7 +69,7 @@ class EventsManager extends Base
             $query->andFilterWhere(['LIKE', 'name', $get['name']]);
         }
 
-        if(isset($get['month'])){
+        if(!empty($get['month']) || $get['month'] === 0){
             $query->andFilterWhere(["FROM_UNIXTIME(datetime, '%c')" => $get['month']+1]);
         }
 
@@ -106,9 +107,9 @@ class EventsManager extends Base
      */
     public static function getYears()
     {
-        $year = date('Y')-2;
+        $year = date('Y')-5;
         $years = [];
-        for($x=0;$x<4;$x++){
+        for($x=0;$x<7;$x++){
             $year++;
             $years[$year] = $year;
         }
@@ -116,5 +117,22 @@ class EventsManager extends Base
         return $years;
     }
 
+
+    public function getDate1()
+    {
+        $day = date('d',$this->datetime);
+        $month = $this->months[date('n',$this->datetime)-1];
+
+        return $day . ' <span class="month">' . $month . ' </span>';
+    }
+
+    public function getDate2()
+    {
+        $day = date('d',$this->datetime);
+        $month = $this->months_d[date('n',$this->datetime)-1];
+        $year_and_time = date('Y, H:i',$this->datetime);
+
+        return $day . ' ' . $month . ' ' . $year_and_time;
+    }
 
 }

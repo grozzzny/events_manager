@@ -14,7 +14,7 @@ $sort = $data->getSort();
             <?=$sort->link('id');?>
         </th>
         <th><?=$sort->link('name');?></th>
-        <th><?=$sort->link('name',['label' => 'Дата и время']);?></th>
+        <th><?=$sort->link('datetime',['label' => 'Дата и время']);?></th>
         <th><?=$sort->link('slider');?></th>
         <th><?=$sort->link('home_page',['label' => 'На главной']);?></th>
         <th width="100"><?=$sort->link('status');?></th>
