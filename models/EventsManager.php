@@ -121,7 +121,7 @@ class EventsManager extends Base
     public function getDate1()
     {
         $day = date('d',$this->datetime);
-        $month = $this->months[date('n',$this->datetime)-1];
+        $month = $this->months_d[date('n',$this->datetime)-1];
 
         return $day . ' <span class="month">' . $month . ' </span>';
     }
