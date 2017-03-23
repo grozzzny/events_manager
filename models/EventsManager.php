@@ -135,4 +135,13 @@ class EventsManager extends Base
         return $day . ' ' . $month . ' ' . $year_and_time;
     }
 
+    public function getDate3()
+    {
+        $day = date('d',$this->datetime);
+        $month = $this->months_d[date('n',$this->datetime)-1];
+        $year_and_time = date('H:i',$this->datetime);
+
+        return $day . ' ' . $month . ' ' . $year_and_time;
+    }
+
 }
