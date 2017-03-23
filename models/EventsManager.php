@@ -9,14 +9,20 @@ class EventsManager extends Base
     const TITLE = 'Менеджер событий';
     const ALIAS = 'events_manager';
 
+    const SUBMENU_PHOTOS = false;
+    const SHOW_ORDER_NUM = false;
+    const PRIMARY_MODEL = true;
+
     const SLIDER_OFF = 0;
     const SLIDER_ON = 1;
+
+    const TAB_OFF = 0;
+    const TAB_ON = 1;
 
     const HOME_PAGE_OFF = 0;
     const HOME_PAGE_ON = 1;
 
-    const SUBMENU_PHOTOS = false;
-    const SHOW_ORDER_NUM = false;
+
 
     public $months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     public $months_d = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
@@ -34,8 +40,10 @@ class EventsManager extends Base
             ['preview', 'image'],
             [['datetime','order_num'], 'integer'],
             ['description', 'safe'],
+            ['audio', 'file', 'mimeTypes' => ['audio/mp3']],
             ['status', 'default', 'value' => self::STATUS_ON],
             ['slider', 'default', 'value' => self::SLIDER_OFF],
+            ['tab', 'default', 'value' => self::TAB_OFF],
             ['home_page', 'default', 'value' => self::HOME_PAGE_ON],
             [['soc_vk', 'soc_fb', 'soc_inst'], 'url'],
             ['name', 'required'],
@@ -59,6 +67,8 @@ class EventsManager extends Base
             'home_page' => 'Размещение на главной',
             'order_num' => 'Индекс сортировки',
             'sort' => 'Индекс сортировки',
+            'tab' => 'Описание',
+            'audio' => 'Аудиозапись',
             'status' => 'Состояние'
         ];
     }

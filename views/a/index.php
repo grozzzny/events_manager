@@ -12,7 +12,7 @@ $this->title = $current_model::TITLE;
 
 <? if($data->count > 0) : ?>
 
-    <?= $this->render('_list/'.$current_model::ALIAS, [
+    <?= $this->render($current_model::ALIAS.'/_list', [
         'data' => $data,
         'current_model' => $current_model
     ]) ?>

@@ -8,7 +8,7 @@ class SwitchCheckbox extends Widget
 {
 
     public $model;
-    public $attribute;
+    public $attributes = [];
 
     /**
      * Инициализация виджита
@@ -28,7 +28,7 @@ class SwitchCheckbox extends Widget
 
         return $this->render('index', [
             'model' => $this->model,
-            'attribute' => $this->attribute
+            'attributes' => $this->attributes
         ]);
     }
 

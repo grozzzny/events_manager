@@ -18,17 +18,17 @@ $module = $this->context->module->id;
 
 
 <?php if($current_model->preview) : ?>
-<div class="form-group">
-    <img src="<?= Image::thumb($current_model->preview, 240) ?>">
-</div>
-<div class="form-group">
-    <a href="<?= Url::to([
-        '/admin/'.$module.'/a/clear-image',
-        'id' => $current_model->id,
-        'alias' => $current_model::ALIAS,
-        'attribute' => 'preview'
-    ]) ?>" class="text-danger confirm-delete" title="<?= Yii::t('easyii', 'Clear image')?>"><?= Yii::t('easyii', 'Clear image')?></a>
-</div>
+    <div class="form-group">
+        <img src="<?= Image::thumb($current_model->preview, 240) ?>">
+    </div>
+    <div class="form-group">
+        <a href="<?= Url::to([
+            '/admin/'.$module.'/a/clear-image',
+            'id' => $current_model->id,
+            'alias' => $current_model::ALIAS,
+            'attribute' => 'preview'
+        ]) ?>" class="text-danger confirm-delete" title="<?= Yii::t('easyii', 'Clear image')?>"><?= Yii::t('easyii', 'Clear image')?></a>
+    </div>
 <?php endif; ?>
 <?= $form->field($current_model, 'preview')->fileInput() ?>
 
@@ -41,6 +41,12 @@ $module = $this->context->module->id;
 
 <?= $form->field($current_model, 'address')->textarea() ?>
 
+
+<?=SwitchCheckbox::widget([
+    'model' => $current_model,
+    'attributes' => ['tab']
+])?>
+
 <?= $form->field($current_model, 'description')->widget(Redactor::className(),[
     'options' => [
         'minHeight' => 400,
@@ -50,37 +56,25 @@ $module = $this->context->module->id;
     ]
 ])?>
 
+<?= $form->field($current_model, 'audio')->fileInput() ?>
+<?php if($current_model->audio) : ?>
+    <div>
+        <a href="<?= $current_model->audio ?>" target="_blank"><?= basename($current_model->audio) ?></a>
+        (<?= Yii::$app->formatter->asShortSize(filesize(Yii::getAlias('@webroot').$current_model->audio), 2) ?>)
+    </div>
+    <br>
+<?php endif; ?>
+
 <?= $form->field($current_model, 'sort') ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <ul class="list-group">
-
-            <li class="list-group-item">
-                <?=SwitchCheckbox::widget([
-                    'model' => $current_model,
-                    'attribute' => 'slider'
-                ])?>
-            </li>
-
-            <li class="list-group-item">
-                <?=SwitchCheckbox::widget([
-                    'model' => $current_model,
-                    'attribute' => 'home_page'
-                ])?>
-            </li>
-
-            <li class="list-group-item">
-                <?=SwitchCheckbox::widget([
-                    'model' => $current_model,
-                    'attribute' => 'status'
-                ])?>
-            </li>
-
-        </ul>
-    </div>
-</div>
-
+<?=SwitchCheckbox::widget([
+    'model' => $current_model,
+    'attributes' => [
+        'slider',
+        'home_page',
+        'status'
+    ]
+])?>
 
 <?= Html::submitButton(Yii::t('easyii', 'Save'), ['class' => 'btn btn-primary']) ?>
 <?php ActiveForm::end(); ?>

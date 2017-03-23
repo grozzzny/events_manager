@@ -20,9 +20,23 @@ class Base extends \yii\easyii\components\ActiveRecord
 
     public function getModels()
     {
-        return [
-            EventsManager::ALIAS => Yii::createObject(EventsManager::className())
-        ];
+        $models = [];
+
+        foreach (glob(__DIR__ . "/*.php") as $file){
+            $file_name = basename($file, '.php');
+
+            if($file_name == 'Base') continue;
+
+            $class_name = 'grozzzny\events_manager\models\\' . $file_name;
+
+            $class = Yii::createObject($class_name);
+
+            if(!$class::PRIMARY_MODEL) continue;
+
+            $models[$class::ALIAS] = $class;
+        }
+
+        return $models;
     }
 
     public static function getModel($alias)
@@ -31,13 +45,27 @@ class Base extends \yii\easyii\components\ActiveRecord
         return empty($alias) ? current($models) : $models[$alias];
     }
 
-    public static function getAttributesImage()
-    {
-        return ['preview', 'photo', 'logo', 'icon'];
-    }
-
     public static function queryFilter(&$query, $get)
     {
 
+    }
+
+    /**
+     * Проверяет, имеется ли данный валидатор у атрибута или нет
+     * @param $validator
+     * @param $attribute
+     * @return bool
+     */
+    public function hasValidator($validator, $attribute)
+    {
+        foreach ($this->rules() as $rule){
+            $attributes = is_array($rule[0]) ? $rule[0] : [$rule[0]];
+
+            if(in_array($attribute, $attributes) && $validator == $rule[1]){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

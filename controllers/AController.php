@@ -15,6 +15,8 @@ use yii\easyii\components\Controller;
 class AController extends Controller
 {
 
+    use TraitController;
+
     public function behaviors()
     {
         return [
@@ -65,16 +67,7 @@ class AController extends Controller
             }
             else{
                 if(isset($_FILES)){
-                    foreach ($current_model->getAttributes() as $attribute => $value){
-                        if(in_array($attribute, Base::getAttributesImage())) {
-                            $current_model->$attribute = UploadedFile::getInstance($current_model, $attribute);
-                            if ($current_model->$attribute && $current_model->validate([$attribute])) {
-                                $current_model->$attribute = Image::upload($current_model->$attribute, $current_model::ALIAS);
-                            } else {
-                                $current_model->$attribute = '';
-                            }
-                        }
-                    }
+                    $this->saveFiles($current_model);
                 }
 
                 if($current_model->save()){
@@ -117,17 +110,7 @@ class AController extends Controller
             }
             else{
                 if(isset($_FILES)){
-                    foreach ($current_model->getAttributes() as $attribute => $value){
-                        if(in_array($attribute, Base::getAttributesImage())) {
-                            $current_model->$attribute = UploadedFile::getInstance($current_model, $attribute);
-                            if($current_model->$attribute && $current_model->validate([$attribute])){
-                                $current_model->$attribute = Image::upload($current_model->$attribute, $current_model::ALIAS);
-                            }
-                            else{
-                                $current_model->$attribute = $current_model->oldAttributes[$attribute];
-                            }
-                        }
-                    }
+                    $this->saveFiles($current_model);
                 }
 
                 if($current_model->save()){
