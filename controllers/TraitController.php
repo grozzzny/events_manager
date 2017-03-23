@@ -24,7 +24,7 @@ trait TraitController
                 }
             }elseif ($current_model->hasValidator('file', $attribute)){
                 if($fileInstanse = UploadedFile::getInstance($current_model, $attribute)) {
-                    $current_model->$attribute = Upload::file($fileInstanse, $attribute, false);
+                    $current_model->$attribute = Upload::file($fileInstanse, $current_model::ALIAS, false);
                 }else{
                     $current_model->$attribute = $current_model->isNewRecord ? '' : $current_model->oldAttributes[$attribute];
                 }
