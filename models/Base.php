@@ -7,6 +7,8 @@ use yii\easyii\behaviors\SortableModel;
 
 class Base extends \yii\easyii\components\ActiveRecord
 {
+    use TraitModel;
+
     const STATUS_OFF = 0;
     const STATUS_ON = 1;
 
@@ -27,7 +29,9 @@ class Base extends \yii\easyii\components\ActiveRecord
 
             if($file_name == 'Base') continue;
 
-            $class_name = 'grozzzny\events_manager\models\\' . $file_name;
+            $class_name = __NAMESPACE__ . '\\' . $file_name;
+
+            if(!class_exists($class_name)) continue;
 
             $class = Yii::createObject($class_name);
 
@@ -51,21 +55,39 @@ class Base extends \yii\easyii\components\ActiveRecord
     }
 
     /**
-     * Проверяет, имеется ли данный валидатор у атрибута или нет
-     * @param $validator
-     * @param $attribute
+     * Используется при отчистке ранее загруженных файлов
+     * @param bool $insert
      * @return bool
      */
-    public function hasValidator($validator, $attribute)
+    public function beforeSave($insert)
     {
-        foreach ($this->rules() as $rule){
-            $attributes = is_array($rule[0]) ? $rule[0] : [$rule[0]];
+        if (parent::beforeSave($insert)) {
+            if(!$insert){
+                foreach ($this->getAttributes() as $attribute => $value){
+                    if($this->hasValidator(['image', 'file'], $attribute)) {
+                        if($this->$attribute !== $this->oldAttributes[$attribute]){
+                            @unlink(Yii::getAlias('@webroot') . $this->oldAttributes[$attribute]);
+                        }
+                    }
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-            if(in_array($attribute, $attributes) && $validator == $rule[1]){
-                return true;
+    /**
+     * Используется при отчистке файлов
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        foreach ($this->getAttributes() as $attribute => $value){
+            if($this->hasValidator(['image', 'file'], $attribute)) {
+                @unlink(Yii::getAlias('@webroot').$this->$attribute);
             }
         }
-
-        return false;
     }
 }

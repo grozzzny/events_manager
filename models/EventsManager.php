@@ -10,6 +10,7 @@ class EventsManager extends Base
     const ALIAS = 'events_manager';
 
     const SUBMENU_PHOTOS = false;
+    const SUBMENU_FILES = true;
     const SHOW_ORDER_NUM = false;
     const PRIMARY_MODEL = true;
 
@@ -23,6 +24,7 @@ class EventsManager extends Base
     const HOME_PAGE_ON = 1;
 
 
+    public $audioFiles;
 
     public $months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     public $months_d = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
@@ -40,14 +42,14 @@ class EventsManager extends Base
             ['preview', 'image'],
             [['datetime','order_num'], 'integer'],
             ['description', 'safe'],
-            ['audio', 'file', 'mimeTypes' => ['audio/mp3']],
+//            ['audio', 'file', 'mimeTypes' => ['audio/mp3']],
             ['status', 'default', 'value' => self::STATUS_ON],
             ['slider', 'default', 'value' => self::SLIDER_OFF],
             ['tab', 'default', 'value' => self::TAB_OFF],
             ['home_page', 'default', 'value' => self::HOME_PAGE_ON],
             [['soc_vk', 'soc_fb', 'soc_inst'], 'url'],
             ['name', 'required'],
-            [['sort'], 'integer']
+            [['sort'], 'integer'],
         ];
     }
 
@@ -69,7 +71,7 @@ class EventsManager extends Base
             'sort' => 'Индекс сортировки',
             'tab' => 'Описание',
             'audio' => 'Аудиозапись',
-            'status' => 'Состояние'
+            'status' => 'Состояние',
         ];
     }
 
@@ -152,6 +154,16 @@ class EventsManager extends Base
         $year_and_time = date('H:i',$this->datetime);
 
         return $day . ' ' . $month . ' ' . $year_and_time;
+    }
+
+    public function getFiles()
+    {
+        return $this->hasMany(Files::className(), ['event_id' => 'id']);
+    }
+
+    public function getAllFiles()
+    {
+        return Files::find()->all();
     }
 
 }

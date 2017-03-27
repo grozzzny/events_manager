@@ -23,7 +23,7 @@ $module = $this->context->module->id;
     </div>
     <div class="form-group">
         <a href="<?= Url::to([
-            '/admin/'.$module.'/a/clear-image',
+            '/admin/'.$module.'/a/clear-file',
             'id' => $current_model->id,
             'alias' => $current_model::ALIAS,
             'attribute' => 'preview'
@@ -56,14 +56,21 @@ $module = $this->context->module->id;
     ]
 ])?>
 
-<?= $form->field($current_model, 'audio')->fileInput() ?>
-<?php if($current_model->audio) : ?>
-    <div>
-        <a href="<?= $current_model->audio ?>" target="_blank"><?= basename($current_model->audio) ?></a>
-        (<?= Yii::$app->formatter->asShortSize(filesize(Yii::getAlias('@webroot').$current_model->audio), 2) ?>)
-    </div>
-    <br>
-<?php endif; ?>
+<?//= $form->field($current_model, 'audio')->fileInput(['multiple']) ?>
+<?php //if($current_model->audio) : ?>
+<!--    <div>-->
+<!--        <a href="--><?//= $current_model->audio ?><!--" target="_blank">--><?//= basename($current_model->audio) ?><!--</a>-->
+<!--        (--><?//= Yii::$app->formatter->asShortSize(filesize(Yii::getAlias('@webroot').$current_model->audio), 2) ?><!--)-->
+<!--        <span> / </span>-->
+<!--        <a href="--><?//= Url::to([
+//            '/admin/'.$module.'/a/clear-file',
+//            'id' => $current_model->id,
+//            'alias' => $current_model::ALIAS,
+//            'attribute' => 'audio'
+//        ]) ?><!--" class="text-danger confirm-delete" title="Удалить файл">Удалить файл</a>-->
+<!--    </div>-->
+<!--    <br>-->
+<?php //endif; ?>
 
 <?= $form->field($current_model, 'sort') ?>
 

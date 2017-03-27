@@ -2,6 +2,7 @@
 namespace grozzzny\events_manager\controllers;
 
 use grozzzny\events_manager\models\Base;
+use grozzzny\events_manager\models\Files;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\easyii\behaviors\SortableController;
@@ -145,6 +146,64 @@ class AController extends Controller
         ]);
     }
 
+    public function actionFiles($alias, $id)
+    {
+        $current_model = Base::getModel($alias);
+
+        $current_model = $current_model::findOne($id);
+
+        if(!($current_model)){
+            return $this->redirect(['/admin/'.$this->module->id]);
+        }
+
+        $files_model = Yii::createObject(Files::className());
+
+        return $this->render('files', [
+            'current_model' => $current_model,
+            'files_model' => $files_model
+        ]);
+    }
+
+
+    public function actionUpload($id)
+    {
+        if(Yii::$app->request->isAjax){
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            $model = Yii::createObject(Files::className());
+
+            $model->event_id = $id;
+
+            if(isset($_FILES)){
+                $this->saveFiles($model);
+                $model->save(false);
+
+                return [
+                    'result' => 'success'
+                ];
+            }
+
+        }
+    }
+
+    public function actionFileDelete($id)
+    {
+        $model = Files::findOne($id);
+
+        if($model === null){
+            $this->flash('error', Yii::t('easyii', 'Not found'));
+        }else{
+            $url = $model->file;
+            if($model->delete()){
+                @unlink(Yii::getAlias('@webroot').$url);
+                $this->flash('success', Yii::t('easyii', 'File cleared'));
+            } else {
+                $this->flash('error', Yii::t('easyii', 'Update error. {0}', $model->formatErrors()));
+            }
+        }
+        return $this->back();
+    }
+
     /**
      * Удалить
      * @param $alias
@@ -171,7 +230,7 @@ class AController extends Controller
      * @param $id
      * @return \yii\web\Response
      */
-    public function actionClearImage($attribute, $alias, $id)
+    public function actionClearFile($attribute, $alias, $id)
     {
         $current_model = Base::getModel($alias);
 
@@ -179,19 +238,19 @@ class AController extends Controller
 
         if($current_model === null){
             $this->flash('error', Yii::t('easyii', 'Not found'));
-        }
-        else{
-            $url_img = $current_model->$attribute;
+        }else{
+            $url = $current_model->$attribute;
             $current_model->$attribute = '';
             if($current_model->update()){
-                @unlink(Yii::getAlias('@webroot').$url_img);
-                $this->flash('success', Yii::t('easyii', 'Image cleared'));
+                @unlink(Yii::getAlias('@webroot').$url);
+                $this->flash('success', Yii::t('easyii', 'File cleared'));
             } else {
                 $this->flash('error', Yii::t('easyii', 'Update error. {0}', $current_model->formatErrors()));
             }
         }
         return $this->back();
     }
+
 
     /**
      * Активировать

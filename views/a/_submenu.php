@@ -22,5 +22,13 @@ $module = $this->context->module->id;
     </li>
     <? endif;?>
 
+    <? if($current_model::SUBMENU_FILES): ?>
+        <li <?= ($action === 'files') ? 'class="active"' : '' ?>>
+            <a href="<?= Url::to(['/admin/'.$module.'/a/files', 'id' => $current_model->primaryKey, 'alias' => $current_model::ALIAS]) ?>">
+                Аудиозаписи
+            </a>
+        </li>
+    <? endif;?>
+
 </ul>
 <br>
