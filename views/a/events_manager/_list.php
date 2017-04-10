@@ -58,6 +58,7 @@ $sort = $data->getSort();
                 <a href="<?= Url::to(['/admin/'.$module.'/a/delete', 'id' => $item->primaryKey, 'alias' => $item::ALIAS]) ?>" class="btn btn-default confirm-delete" title="<?= Yii::t('easyii', 'Delete item') ?>"><span class="glyphicon glyphicon-remove"></span></a>
             </div>
         </td>
-        <? endforeach; ?>
+    <tr>
+    <? endforeach; ?>
     </tbody>
 </table>
