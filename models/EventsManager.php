@@ -109,7 +109,7 @@ class EventsManager extends Base
             $attributes = $attributes + ['order_num'];
         }
 
-        $sort = $sort + ['attributes' => $attributes];
+        $sort = $sort + ['attributes' => $attributes] + ['defaultOrder' => ['id' => SORT_DESC]];
 
         $provider->setSort($sort);
     }
