@@ -7,6 +7,7 @@ use yii\easyii\widgets\Redactor;
 use yii\helpers\BaseHtml;
 use grozzzny\events_manager\widgets\switch_checkbox\SwitchCheckbox;
 use yii\easyii\widgets\DateTimePicker;
+use kartik\color\ColorInput;
 
 $module = $this->context->module->id;
 ?>
@@ -33,6 +34,25 @@ $module = $this->context->module->id;
 <?= $form->field($current_model, 'preview')->fileInput() ?>
 
 <?= $form->field($current_model, 'name') ?>
+
+<div class="row">
+    <div class="col-md-4">
+        <?= $form->field($current_model, 'color1')->widget(ColorInput::classname(), [
+            'options' => ['placeholder' => 'Выберите цвет ...'],
+        ]); ?>
+    </div>
+    <div class="col-md-4">
+        <?= $form->field($current_model, 'color2')->widget(ColorInput::classname(), [
+            'options' => ['placeholder' => 'Выберите цвет ...'],
+        ]); ?>
+    </div>
+    <div class="col-md-4">
+        <?= $form->field($current_model, 'color3')->widget(ColorInput::classname(), [
+            'options' => ['placeholder' => 'Выберите цвет ...'],
+        ]); ?>
+    </div>
+</div>
+
 <?= $form->field($current_model, 'soc_vk') ?>
 <?= $form->field($current_model, 'soc_fb') ?>
 <?= $form->field($current_model, 'soc_inst') ?>

@@ -39,7 +39,7 @@ class EventsManager extends Base
     {
         return [
             ['id', 'number', 'integerOnly' => true],
-            [['name', 'address'], 'string'],
+            [['name', 'address','color1','color2','color3'], 'string'],
             ['preview', 'image'],
             [['datetime','order_num'], 'integer'],
             ['description', 'safe'],
@@ -73,6 +73,9 @@ class EventsManager extends Base
             'tab' => 'Описание',
             'audio' => 'Аудиозапись',
             'status' => 'Состояние',
+            'color1' => 'Цвет №1',
+            'color2' => 'Цвет №2',
+            'color3' => 'Цвет №3',
         ];
     }
 
