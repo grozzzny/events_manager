@@ -3,6 +3,7 @@ namespace grozzzny\events_manager\models;
 
 use Yii;
 use yii\easyii\models\Photo;
+use yii\helpers\ArrayHelper;
 
 class EventsManager extends Base
 {
@@ -86,7 +87,7 @@ class EventsManager extends Base
             $query->andFilterWhere(['LIKE', 'name', $get['name']]);
         }
 
-        if(!empty($get['month']) || $get['month'] === 0){
+        if(!empty($get['month']) || ArrayHelper::getValue($get, 'month', '') === 0){
             $query->andFilterWhere(["FROM_UNIXTIME(datetime, '%c')" => $get['month']+1]);
         }
 

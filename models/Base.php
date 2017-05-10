@@ -20,7 +20,7 @@ class Base extends \yii\easyii\components\ActiveRecord
         ];
     }
 
-    public function getModels()
+    public static function getModels()
     {
         $models = [];
 
